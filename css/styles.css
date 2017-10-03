@@ -1,0 +1,41 @@
+body {
+  background-color: lightgreen;
+}
+
+h3 {
+  text-align: center;
+}
+
+.banner {
+  height: 100px;
+  text-align: center;
+}
+
+.banner-text {
+  padding-top: 22px;
+}
+
+.back-img {
+  position: absolute;
+  /*height: 100%;*/
+  z-index: -10;
+}
+
+.row {
+  background-color: white;
+  height: 200px;
+  margin-left: 10%;
+  margin-right: 10%;
+  border-color: black;
+  border-width: 2px;
+  border-radius: 10px;
+  border-style: solid;
+}
+
+.main-row {
+  padding-top: 16px;
+}
+
+.rules-col {
+  text-align: center;
+}
