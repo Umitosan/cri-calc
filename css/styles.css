@@ -23,7 +23,6 @@ h3 {
 
 .row {
   background-color: white;
-  height: 200px;
   margin-left: 10%;
   margin-right: 10%;
   border-color: black;
@@ -36,6 +35,35 @@ h3 {
   padding-top: 16px;
 }
 
+.second-row {
+  height: 200px;
+}
+
 .rules-col {
   text-align: center;
+}
+
+.input-col {
+  text-align: center;
+}
+
+.output-col {
+  text-align: center;
+}
+
+.numbers {
+
+}
+
+ol {
+  text-align: center;
+}
+
+li {
+ font-size: 20px;
+ font-weight: bold;
+}
+
+.grey-back {
+  background-color: lightgrey;
 }
