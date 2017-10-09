@@ -152,8 +152,8 @@ $(document).ready(function() {
       $("#input-err").text("lower-bound must be <= upper-bound");
     } else if ( userQuantity >= (userUpper - userLower) ) {
       $("#input-err").text("too many Quantity for given range");
-    } else if (userSum <= userUpper) {
-      $("#input-err").text("sum can't be less than upper bounds");
+    } else if ( (userSum <= userLower) || (userSum >= userUpper) ) {
+      $("#input-err").text("sum must be between range");
     } else if (userQuantity >= (userUpper - userLower)) {
       $("#input-err").text("quantity can't fit into range");
     } else {
