@@ -33,6 +33,7 @@ h3 {
 
 .main-row {
   padding-top: 16px;
+  padding-bottom: 20px;
 }
 
 .second-row {
@@ -66,4 +67,8 @@ li {
 
 .grey-back {
   background-color: lightgrey;
+}
+
+.range {
+  display: inline-block;
 }

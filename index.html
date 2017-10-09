@@ -23,11 +23,27 @@
       <div class="col-sm-6 input-col">
         <h3>input</h3>
         <hr>
-        <button id="gen-btn-1" class="btn btn-success" type="button">Gen 31 numbers</button>
         <h5> 31 random integers that add up to 37806, within a range from 79 to 1437 </h5>
+        <button id="gen-btn-1" class="btn btn-success" type="button">Gen 31 numbers</button>
         <hr>
-        <button id="gen-btn-2" class="btn btn-success" type="button">Gen 10 numbers</button>
         <h5> 10 random integers that add up to 8919, within a range from 421 to 1183 </h5>
+        <button id="gen-btn-2" class="btn btn-success" type="button">Gen 10 numbers</button>
+        <hr>
+        <h5> Custom </h5>
+        <label for="lower-bounds">Lower Bounds</label>
+        <input id="lower-bounds" type="number" name="lower-bounds" value="0" min="1" max="10000" step="1"/><p class="range">(1-10000)</p>
+        <br>
+        <label for="upper-bounds">Upper Bounds</label>
+        <input id="upper-bounds" type="number" name="upper-bounds" value="0" min="1" max="10000" step="1"/><p class="range">(1-10000)</p>
+        <br>
+        <label for="desired-sum">Desired Sum</label>
+        <input id="desired-sum" type="number" name="desired-sum" value="0" min="1" max="100000" step="1"/><p class="range">(1-100000)</p>
+        <br>
+        <label for="quantity-returned">Quantity to generate</label>
+        <input id="quantity-returned" type="number" name="quantity-returned" value="0" min="1" max="200" step="1"/><p class="range">(1-200)</p>
+        <br>
+        <h5 class="error-text" id="input-err"></h5>
+        <button id="gen-btn-3" class="btn btn-success" type="button">Gen Test 3</button>
       </div>
 
       <div class="col-sm-6 output-col">
