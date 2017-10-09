@@ -1,39 +1,46 @@
 body {
   background-color: lightgreen;
+  font-weight: bold;
 }
 
 h3 {
   text-align: center;
 }
 
-.banner {
+.banner-row {
   height: 100px;
-  text-align: center;
+  background: linear-gradient(-45deg, #98D4CD, white);
 }
 
 .banner-text {
   padding-top: 22px;
+  text-align: center;
+}
+
+.gif1 {
+  z-index: 2;
+  float: left;
+}
+.gif2 {
+  z-index: 2;
+  float: right;
 }
 
 .back-img {
   position: absolute;
-  /*height: 100%;*/
   z-index: -10;
-}
-
-.row {
-  background-color: white;
-  margin-left: 10%;
-  margin-right: 10%;
-  border-color: black;
-  border-width: 2px;
-  border-radius: 10px;
-  border-style: solid;
 }
 
 .main-row {
   padding-top: 16px;
   padding-bottom: 20px;
+  background-color: white;
+  margin-left: 10%;
+  margin-right: 10%;
+  border-color: #418A52;
+  border-width: 2px;
+  border-radius: 10px;
+  border-style: solid;
 }
 
 .second-row {
@@ -61,8 +68,7 @@ ol {
 }
 
 li {
- font-size: 20px;
- font-weight: bold;
+ font-size: 18px;
 }
 
 .grey-back {

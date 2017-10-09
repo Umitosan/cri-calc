@@ -135,7 +135,7 @@ $(document).ready(function() {
     $("#sum").text(getSum(finalArr));
   });
 
-  // Custom user input
+  // Custom user input with validation
   $("#gen-btn-3").click(function() {
     clearOut();
     var userLower = parseInt($("#lower-bounds").val());
@@ -199,6 +199,13 @@ $(document).ready(function() {
     }
     console.log("diff = ", diff);
     console.log("final array sum = ", getSum(scaledArr));
+    //output list of numbers and sum
+    scaledArr.forEach(function(num) {
+      $("#seed-list").append("<li>" + num + "</li>");
+    });
+    $("li:odd").css( "background-color", "lightgrey" );
+    $("#sum").text(getSum(scaledArr));
+
   });
 
 });
