@@ -142,6 +142,7 @@ $(document).ready(function() {
     var userUpper = parseInt($("#upper-bounds").val());
     var userSum = parseInt($("#desired-sum").val());
     var userQuantity = parseInt($("#quantity-returned").val());
+    var foundErrors = false;
     console.log("typeof userLower = ", typeof userLower);
     console.log("");
     console.log("Lower: "+userLower+"  Upper: "+userUpper+"  Sum: "+userSum+"  Quantity: "+userQuantity);
@@ -150,62 +151,118 @@ $(document).ready(function() {
     $("#input-err").css('color', 'red');
     if (userUpper <= userLower) {
       $("#input-err").text("lower-bound must be <= upper-bound");
+      foundErrors = true;
     } else if ( userQuantity >= (userUpper - userLower) ) {
       $("#input-err").text("too many Quantity for given range");
-    } else if ( (userSum <= userLower) || (userSum >= userUpper) ) {
-      $("#input-err").text("sum must be between range");
-    } else if (userQuantity >= (userUpper - userLower)) {
-      $("#input-err").text("quantity can't fit into range");
+      foundErrors = true;
+    } else if (userSum <= userLower) {
+      $("#input-err").text("sum must be > the lower bounds");
+      foundErrors = true;
+    } else if ((userQuantity * userLower) >= userSum) {
+      $("#input-err").text("quantity or lower bounds too large");
+      foundErrors = true;
+    } else if ((userQuantity * userUpper) <= userSum) {
+      $("#input-err").text("quantity or upper bounds too small");
+      foundErrors = true;
     } else {
       $("#input-err").css('color', 'green');
       $("#input-err").text("input valid");
+      foundErrors = false;
     }
 
-    // randomize starting array
-    var baseArr = [];
-    for (i=0 ; i<userQuantity ; i++) {
-      var num = getRandomIntInclusive(userLower,userUpper);
-      baseArr.push(num);
-    }
-    console.log("baseArr = ", baseArr);
-    var baseArrSum = getSum(baseArr);
-    console.log("baseArrSum = ", baseArrSum);
-    var scaler = userSum / baseArrSum;
-    console.log("scaler = ", scaler);
-    var scaledArr = [];
-    baseArr.forEach(function(num, i) {
-      scaledArr.push(Math.round( num * scaler ));
-    });
-    console.log("scaledArr = ", scaledArr);
-    var newSum = getSum(scaledArr);
-    console.log("scaledArr sum = ", newSum);
-    var diff = 0;
-    if (newSum > userSum) {
-      diff = newSum - userSum;
-      if ((scaledArr[0] - diff) == 0) {
-        scaledArr[1] -= diff;
-      } else {
-        scaledArr[0] -= diff;
+    // if no errors proceed to calc and show output
+    if (foundErrors == false) {
+      // randomize starting array
+      var baseArr = [];
+      for (i=0 ; i<userQuantity ; i++) {
+        var num = getRandomIntInclusive(userLower,userUpper);
+        baseArr.push(num);
       }
-    } else if (newSum < userSum) {
-      diff = userSum - newSum;
-      if ((scaledArr[0] + diff) == 0) {
-        scaledArr[1] += diff;
-      } else {
-        scaledArr[0] += diff;
-      }
-    } else {
-      console.log("diff is 0");
-    }
-    console.log("diff = ", diff);
-    console.log("final array sum = ", getSum(scaledArr));
-    //output list of numbers and sum
-    scaledArr.forEach(function(num) {
-      $("#seed-list").append("<li>" + num + "</li>");
-    });
-    $("li:odd").css( "background-color", "lightgrey" );
-    $("#sum").text(getSum(scaledArr));
+      console.log("baseArr = ", baseArr);
+      var baseArrSum = getSum(baseArr);
+      console.log("baseArrSum = ", baseArrSum);
+      var scaler = userSum / baseArrSum;
+      console.log("scaler = ", scaler);
+      var scaledArr = [];
+      baseArr.forEach(function(num, i) {
+        // check to make sure the scaled number is in range
+        var newScaledNum = Math.round( num * scaler )
+        var growthDiff = newScaledNum - num;
+        if (newScaledNum > userUpper) {
+          scaledArr.push(num);
+        } else if (newScaledNum < userLower) {
+          scaledArr.push(num);
+        } else {
+          scaledArr.push(newScaledNum);
+        }
+      });
+      console.log("scaledArr before adjustment = ", scaledArr);
+      var newSum = getSum(scaledArr);
+      console.log("scaledArr sum = ", newSum);
 
-  });
+      // final adjustment
+      var diff;
+      if (newSum > userSum) {
+        diff = newSum - userSum;
+      } else if (newSum < userSum) {
+        diff = userSum - newSum;
+      } else {
+        console.log("diff is 0");
+      }
+      console.log("diff = ", diff);
+
+      // try to add a bit of the remainder to each element in array until remainder == 0
+      var remainder = diff;
+      var sliceNum;
+      if (diff > 0) {
+        while (remainder > 0) {
+          var sliceNum = getRandomIntInclusive(1, remainder);
+          var sliceUsed = false;
+          scaledArr.forEach(function(oldNum, i) {
+            var newNum = (oldNum + sliceNum);
+            var indexToAddTo;
+            if (sliceUsed == false) {
+              if ( ( newNum <= userUpper ) && ( newNum >= userLower) ) {
+                console.log("slice: ", sliceNum, " added to oldNum: ", oldNum, " at index: ", i, " newNum = ", newNum);
+                scaledArr[i] = newNum;
+                remainder -= sliceNum;
+                console.log("remainder now is: ", remainder);
+                sliceUsed = true;
+              }
+            }
+          });
+        } // END while
+      } // END if
+      if (diff < 0) {
+        while (remainder < 0) {
+          var sliceNum = getRandomIntInclusive(1, Math.abs(remainder)) * -1;
+          var sliceUsed = false;
+          scaledArr.forEach(function(oldNum, i) {
+            var newNum = (oldNum + sliceNum);
+            var indexToAddTo;
+            if (sliceUsed == false) {
+              if ( ( newNum <= userUpper ) && ( newNum >= userLower) ) {
+                console.log("slice: ", sliceNum, " added to oldNum: ", oldNum, " at index: ", i, " newNum = ", newNum);
+                scaledArr[i] = newNum;
+                remainder += sliceNum;
+                console.log("remainder now is: ", remainder);
+                sliceUsed = true;
+              }
+            }
+          });
+        } // END while
+      }
+      console.log("scaledArr after adjustment = ", scaledArr);
+      console.log("final scaledArr sum = ", getSum(scaledArr));
+
+      //output list of numbers and sum
+      scaledArr.forEach(function(num) {
+        $("#seed-list").append("<li>" + num + "</li>");
+      });
+      $("li:odd").css( "background-color", "lightgrey" );
+      $("#sum").text(getSum(scaledArr));
+    } // end IF
+
+  }); // end btn-3 click
 
 });
