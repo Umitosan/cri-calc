@@ -32,15 +32,14 @@ h3 {
 }
 
 .main-row {
+  background-color: #E5ffEB !important;
   padding-top: 16px;
   padding-bottom: 20px;
   background-color: white;
   margin-left: 10%;
   margin-right: 10%;
-  border-color: #418A52;
   border-width: 2px;
   border-radius: 10px;
-  border-style: solid;
 }
 
 .second-row {
@@ -69,6 +68,7 @@ ol {
 
 li {
  font-size: 18px;
+ font-weight: bold;
 }
 
 .grey-back {
